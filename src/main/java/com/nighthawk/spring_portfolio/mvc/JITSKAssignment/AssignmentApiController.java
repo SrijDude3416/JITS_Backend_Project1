@@ -16,7 +16,7 @@ public class AssignmentApiController {
     @Autowired
     private AssignmentsJpaRepository repository;
 
-      @GetMapping("/")
+    @GetMapping("/")
     public ResponseEntity<List<Assignment>> getAssignments() {
         // ResponseEntity returns List of Jokes provide by JPA findAll()
         return new ResponseEntity<>( repository.findAll(), HttpStatus.OK);
