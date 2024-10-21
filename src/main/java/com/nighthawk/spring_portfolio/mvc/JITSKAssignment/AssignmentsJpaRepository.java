@@ -10,6 +10,4 @@ public interface AssignmentsJpaRepository extends JpaRepository<Assignment, Long
     The below custom methods are prototyped for this application
     */
     void save(String assigned);
-    List<Assignment> findAllByOrderByJokeAsc();
-    List<Assignment> findByJokeIgnoreCase(String assigned);
 }
