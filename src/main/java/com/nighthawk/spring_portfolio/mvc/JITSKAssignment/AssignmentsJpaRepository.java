@@ -11,5 +11,7 @@ public interface AssignmentsJpaRepository extends JpaRepository<Assignment, Long
      * JPA has many built-in methods. 
      * The below custom method is prototyped for this application.
      */
-    // List<Assignment> findByAssignedIgnoreCase(String assigned);
+    List<Assignment> findAllByOrderByIdAsc();
+
+
 }

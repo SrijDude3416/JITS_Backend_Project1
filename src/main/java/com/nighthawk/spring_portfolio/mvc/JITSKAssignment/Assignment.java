@@ -20,13 +20,8 @@ public class Assignment {
     @Column(unique=true)
 
     
-    private String description;
     private double points; // max grade
     private String name;
-    // private Date duedate;
-    // private Date startdate;
-    private String rubric;
-
 
     public static String[] init() {
         final String[] Assignments = {
@@ -34,23 +29,4 @@ public class Assignment {
         };
         return Assignments;
     }
-
-
-
-
-    class Date{
-        String year;
-        String month;
-        String day;
-        Date(String year, String month, String day){
-            this.year=year;
-            this.month=month;
-            this.day=day;
-        }
-
-        public String getDate(){
-            return year+" "+month+" "+day;
-        }
-    }
-
 }
