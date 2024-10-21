@@ -1,4 +1,12 @@
 package com.nighthawk.spring_portfolio.mvc.JITSKAssignment;
+
+import jakarta.persistence.Entity;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+@Data  // Annotations to simplify writing code (ie constructors, setters)
+@Entity 
 public class Assignment {
     public String description;
     public double points; // max grade
