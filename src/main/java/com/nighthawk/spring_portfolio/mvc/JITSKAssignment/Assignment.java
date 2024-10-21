@@ -1,4 +1,5 @@
-public class assignment {
+package com.nighthawk.spring_portfolio.mvc.JITSKAssignment;
+public class Assignment {
     public String description;
     public double points; // max grade
     public String name;
@@ -6,7 +7,7 @@ public class assignment {
     public Date startdate;
     public String rubric;
     
-    assignment(String description, double points, String name, Date duedate, Date startdate, String rubric){
+    Assignment(String description, double points, String name, Date duedate, Date startdate, String rubric){
         this.description=description;
         this.points=points;
         this.name=name;
