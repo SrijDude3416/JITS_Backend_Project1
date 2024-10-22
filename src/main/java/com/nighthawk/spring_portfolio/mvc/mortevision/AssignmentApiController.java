@@ -15,6 +15,78 @@ public class AssignmentApiController {
     @Autowired
     private AssignmentJpaRepository repository;
 
+    // GET queue for a specific assignment
+    @GetMapping("/getQueue/{id}")
+    public ResponseEntity<Queue> getQueue(@PathVariable long id) {
+        Optional<Assignment> optional = repository.findById(id);
+        if (optional.isPresent()) {
+            Assignment assignment = optional.get();
+            return new ResponseEntity<>(assignment.getAssignmentQueue(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+
+    @PutMapping("/initQueue/{id}")
+    public ResponseEntity<Assignment> initQueue(@PathVariable long id, @RequestBody List<String> people) {
+        Optional<Assignment> optional = repository.findById(id);
+        if (optional.isPresent()) {
+            Assignment assignment = optional.get();
+            assignment.initQueue(people);
+            repository.save(assignment);
+            return new ResponseEntity<>(assignment, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @PutMapping("/addQueue/{id}")
+    public ResponseEntity<Assignment> addQueue(@PathVariable long id, @RequestBody String person) {
+        Optional<Assignment> optional = repository.findById(id);
+        if (optional.isPresent()) {
+            Assignment assignment = optional.get();
+            assignment.addQueue(person);
+            repository.save(assignment);
+            return new ResponseEntity<>(assignment, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @PutMapping("/removeQueue/{id}")
+    public ResponseEntity<Assignment> removeQueue(@PathVariable long id, @RequestBody String person) {
+        Optional<Assignment> optional = repository.findById(id);
+        if (optional.isPresent()) {
+            Assignment assignment = optional.get();
+            assignment.removeQueue(person);
+            repository.save(assignment);
+            return new ResponseEntity<>(assignment, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @PutMapping("/doneQueue/{id}")
+    public ResponseEntity<Assignment> doneQueue(@PathVariable long id, @RequestBody String person) {
+        Optional<Assignment> optional = repository.findById(id);
+        if (optional.isPresent()) {
+            Assignment assignment = optional.get();
+            assignment.doneQueue(person);
+            repository.save(assignment);
+            return new ResponseEntity<>(assignment, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @PutMapping("/resetQueue/{id}")
+    public ResponseEntity<Assignment> resetQueue(@PathVariable long id) {
+        Optional<Assignment> optional = repository.findById(id);
+        if (optional.isPresent()) {
+            Assignment assignment = optional.get();
+            assignment.resetQueue();
+            repository.save(assignment);
+            return new ResponseEntity<>(assignment, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
     // GET all assignments
     @GetMapping("/")
     public ResponseEntity<List<Assignment>> getAssignments() {
@@ -35,21 +107,31 @@ public class AssignmentApiController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    // UPDATE an assignment (except ID)
     @PutMapping("/update/{id}")
     public ResponseEntity<Assignment> updateAssignment(@PathVariable long id, @RequestBody Assignment updatedAssignment) {
         Optional<Assignment> optional = repository.findById(id);
         if (optional.isPresent()) {
             Assignment assignment = optional.get();
-            assignment.setName(updatedAssignment.getName());
-            assignment.setStartDate(updatedAssignment.getStartDate());
-            assignment.setDueDate(updatedAssignment.getDueDate());
-            assignment.setRubric(updatedAssignment.getRubric());
-            assignment.setPoints(updatedAssignment.getPoints());
-            assignment.setQueue(updatedAssignment.getQueue());
-            repository.save(assignment);
-            return new ResponseEntity<>(assignment, HttpStatus.OK);
+        
+            if (updatedAssignment.getName() != null) {
+                assignment.setName(updatedAssignment.getName());
+            }
+            if (updatedAssignment.getStartDate() != null) {
+                assignment.setStartDate(updatedAssignment.getStartDate());
+            }
+            if (updatedAssignment.getDueDate() != null) {
+                assignment.setDueDate(updatedAssignment.getDueDate());
+            }
+            if (updatedAssignment.getRubric() != null) {
+                assignment.setRubric(updatedAssignment.getRubric());
+            }
+            if (updatedAssignment.getPoints() != 0) {
+                assignment.setPoints(updatedAssignment.getPoints());
+            }
+            repository.save(assignment);  // Save the updated entity
+            return new ResponseEntity<>(assignment, HttpStatus.OK);  // Return the updated assignment
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);  // Assignment not found
     }
+
 }
