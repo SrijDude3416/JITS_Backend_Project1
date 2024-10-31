@@ -39,22 +39,21 @@ public class Assignment {
         assignmentQueue.getHaventGone().addAll(people);
     }
 
-    public void addQueue(String person) {
+    public void addQueue(List<String> people) {
+        String person = people.get(0);
         assignmentQueue.getHaventGone().remove(person);
         assignmentQueue.getQueue().add(person);
     }
 
-    public void removeQueue(String person) {
+    public void removeQueue(List<String> people) {
+        String person = people.get(0);
         assignmentQueue.getQueue().remove(person);
         assignmentQueue.getHaventGone().add(person);
     }
 
-    public void doneQueue(String person) {
+    public void doneQueue(List<String> people) {
+        String person = people.get(0);
         assignmentQueue.getQueue().remove(person);
         assignmentQueue.getDone().add(person);
-    }
-
-    public String toString() {
-        return "{haventGone: [" + this.assignmentQueue.getHaventGone() + "], queue: [" + this.assignmentQueue.getQueue() + "], done: [" + this.assignmentQueue.getDone() + "]}";
     }
 }
